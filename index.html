@@ -1,424 +1,503 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jocul Reciclării - Sortează Corect!</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Nunito:wght@400;600;700;800&family=Bubblegum+Sans&family=Baloo+2:wght@400;500;600;700;800&display=swap');
-        
-        body {
-            font-family: 'Baloo 2', cursive;
-        }
-        
-        .game-title {
-            font-family: 'Fredoka One', cursive;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: rainbow 3s ease-in-out infinite;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .fun-text {
-            font-family: 'Bubblegum Sans', cursive;
-            color: #2d3748;
-        }
-        
-        .playful-header {
-            font-family: 'Baloo 2', cursive;
-            font-weight: 700;
-        }
-        
-        @keyframes rainbow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        
-        .draggable {
-            cursor: grab;
-            transition: all 0.3s ease;
-        }
-        
-        .draggable:hover {
-            transform: scale(1.05);
-        }
-        
-        .draggable.dragging {
-            opacity: 0.7;
-            transform: rotate(5deg) scale(1.1);
-            z-index: 1000;
-        }
-        
-        .drop-zone {
-            transition: all 0.3s ease;
-            border: 3px dashed transparent;
-        }
-        
-        .drop-zone.drag-over {
-            border-color: #10b981;
-            background-color: rgba(16, 185, 129, 0.1);
-            transform: scale(1.02);
-        }
-        
-        .correct-drop {
-            animation: correctPulse 0.6s ease-in-out;
-        }
-        
-        .wrong-drop {
-            animation: wrongShake 0.6s ease-in-out;
-        }
-        
-        @keyframes correctPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        @keyframes wrongShake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-        
-        .celebration {
-            animation: celebrate 1s ease-in-out;
-        }
-        
-        @keyframes celebrate {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            25% { transform: scale(1.1) rotate(-5deg); }
-            75% { transform: scale(1.1) rotate(5deg); }
-        }
-        
-        .progress-bar {
-            transition: width 0.5s ease-in-out;
-        }
-    </style>
+  <!-- Base -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jocul Reciclării – Sortează Corect! | Asociația Grupul Verde</title>
+
+  <!-- Primary SEO -->
+  <meta name="description" content="Joacă „Jocul Reciclării” și învață să sortezi corect plasticul și hârtia. Activitate interactivă din cadrul Săptămânii Verzi Bacău 2025, organizată de Asociația Grupul Verde pentru 110 copii și tineri din Vrancea." />
+  <meta name="keywords" content="reciclare, joc reciclare, educație ecologică, sortare deșeuri, plastic, hârtie, Asociația Grupul Verde, Vrancea, Adjud, Săptămâna Verde" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <link rel="canonical" href="https://www.grupulverde.ro/jocul-reciclarii/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Asociația Grupul Verde" />
+  <meta property="og:locale" content="ro_RO" />
+  <meta property="og:title" content="Jocul Reciclării – Sortează Corect!" />
+  <meta property="og:description" content="Ajută planeta! Trage și plasează obiectele în containerele potrivite și devino eroul reciclării." />
+  <meta property="og:url" content="https://www.grupulverde.ro/jocul-reciclarii/" />
+  <meta property="og:image" content="https://www.grupulverde.ro/assets/og/jocul-reciclarii.jpg" />
+  <meta property="og:image:alt" content="Joc educațional de reciclare pentru copii – plastic și hârtie" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Jocul Reciclării – Sortează Corect!" />
+  <meta name="twitter:description" content="Învață reciclarea prin joc! Sortează corect obiectele și strânge stele." />
+  <meta name="twitter:image" content="https://www.grupulverde.ro/assets/og/jocul-reciclarii.jpg" />
+
+  <!-- App / PWA friendly hints (opțional) -->
+  <meta name="theme-color" content="#22c55e" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Favicon (înlocuiește cu fișierele tale) -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <!-- Privacy-friendly analytics (Plausible) -->
+  <script defer data-domain="grupulverde.ro" src="https://plausible.io/js/script.js"></script>
+
+  <!-- Fonts & CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Nunito:wght@400;600;700;800&family=Bubblegum+Sans&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body { font-family: 'Baloo 2', cursive; }
+    .game-title{
+      font-family:'Fredoka One',cursive;
+      background:linear-gradient(45deg,#ff6b6b,#4ecdc4,#45b7d1,#96ceb4,#feca57);
+      background-size:300% 300%;
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      animation:rainbow 3s ease-in-out infinite;
+      text-shadow:2px 2px 4px rgba(0,0,0,.3)
+    }
+    .fun-text{font-family:'Bubblegum Sans',cursive;color:#2d3748}
+    .playful-header{font-family:'Baloo 2',cursive;font-weight:700}
+    @keyframes rainbow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+    .draggable{cursor:grab;transition:all .3s ease}
+    .draggable:hover{transform:scale(1.05)}
+    .draggable.dragging{opacity:.7;transform:rotate(5deg) scale(1.1);z-index:1000}
+    .drop-zone{transition:all .3s ease;border:3px dashed transparent}
+    .drop-zone.drag-over{border-color:#10b981;background-color:rgba(16,185,129,.1);transform:scale(1.02)}
+    .correct-drop{animation:correctPulse .6s ease-in-out}
+    .wrong-drop{animation:wrongShake .6s ease-in-out}
+    @keyframes correctPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+    @keyframes wrongShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+    .celebration{animation:celebrate 1s ease-in-out}
+    @keyframes celebrate{0%,100%{transform:scale(1) rotate(0)}25%{transform:scale(1.1) rotate(-5deg)}75%{transform:scale(1.1) rotate(5deg)}}
+    .progress-bar{transition:width .5s ease-in-out}
+    .draggable:focus{outline:3px solid #60a5fa; outline-offset:2px}
+    .drop-zone:focus-within{box-shadow:0 0 0 4px rgba(16,185,129,.4)}
+  </style>
+
+  <!-- Structured Data (Organization & Game) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"Asociația Grupul Verde",
+    "url":"https://www.grupulverde.ro/",
+    "publisher":{
+      "@type":"Organization",
+      "name":"Asociația Grupul Verde",
+      "url":"https://www.grupulverde.ro/",
+      "logo":{
+        "@type":"ImageObject",
+        "url":"https://www.grupulverde.ro/assets/logo.png"
+      }
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Game",
+    "name":"Jocul Reciclării – Sortează Corect",
+    "applicationCategory":"EducationalGame",
+    "operatingSystem":"Web",
+    "inLanguage":"ro-RO",
+    "url":"https://www.grupulverde.ro/jocul-reciclarii/",
+    "description":"Joc web de educație ecologică: trage și plasează obiectele în containerele corecte pentru a învăța reciclarea."
+  }
+  </script>
+
+  <!-- Structured Data (BreadcrumbList) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Acasă",
+        "item": "https://www.grupulverde.ro/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Educație Ecologică",
+        "item": "https://www.grupulverde.ro/educatie-ecologica/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Jocul Reciclării"
+      }
+    ]
+  }
+  </script>
 </head>
 <body class="bg-gradient-to-br from-blue-400 via-purple-500 to-pink-400 min-h-screen p-4">
-    <div class="max-w-6xl mx-auto">
-        <!-- Header -->
-        <div class="text-center mb-8">
-            <div class="bg-white bg-opacity-20 rounded-3xl p-6 mb-6 backdrop-blur-sm">
-                <h2 class="playful-header text-2xl font-bold text-white mb-2">🌱 SĂPTĂMÂNA VERDE BACĂU 2025 🌱</h2>
-                <p class="text-lg text-white font-medium">O inițiativă a Asociației Grupul Verde pentru 110 copii/tineri din județul Bacău</p>
-            </div>
-            <h1 class="game-title text-4xl md:text-6xl text-white mb-4 drop-shadow-lg">
-                🌍 Jocul Reciclării 🌍
-            </h1>
-            <p class="text-xl text-white font-semibold">Ajută planeta! Sortează obiectele în containerele potrivite!</p>
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Breadcrumb (vizibil + SEO) -->
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="flex flex-wrap items-center gap-2 text-white/90 text-sm">
+        <li><a class="underline hover:no-underline" href="https://www.grupulverde.ro/">Acasă</a></li>
+        <li aria-hidden="true">›</li>
+        <li><a class="underline hover:no-underline" href="https://www.grupulverde.ro/educatie-ecologica/">Educație Ecologică</a></li>
+        <li aria-hidden="true">›</li>
+        <li aria-current="page" class="font-semibold">Jocul Reciclării</li>
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <header class="text-center mb-8">
+      <div class="bg-white bg-opacity-20 rounded-3xl p-6 mb-6 backdrop-blur-sm">
+        <h2 class="playful-header text-2xl font-bold text-white mb-2">🌱 SĂPTĂMÂNA VERDE BACĂU 2025 🌱</h2>
+        <p class="text-lg text-white font-medium">O inițiativă a Asociației Grupul Verde pentru 110 copii/tineri din județul Vrancea</p>
+      </div>
+      <h1 class="game-title text-4xl md:text-6xl text-white mb-4 drop-shadow-lg">🌍 Jocul Reciclării 🌍</h1>
+      <p class="text-xl text-white font-semibold">Ajută planeta! Sortează obiectele în containerele potrivite!</p>
+    </header>
+
+    <!-- Mission Section -->
+    <section class="bg-white rounded-3xl p-6 mb-6 shadow-2xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="fun-text text-2xl font-bold text-green-700 mb-3">🎯 Misiunea Jocului</h3>
+          <p class="text-gray-700 leading-relaxed">
+            Acest joc interactiv face parte din programul educațional al <strong>Săptămânii Verzi Bacău 2025</strong>.
+            Evenimentul se organizează pentru 110 copii și tineri din județul Vrancea, cu scopul de a învăța importanța reciclării și protejării mediului prin joc și distracție!
+          </p>
         </div>
-
-        <!-- Mission Section -->
-        <div class="bg-white rounded-3xl p-6 mb-6 shadow-2xl">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <h3 class="fun-text text-2xl font-bold text-green-700 mb-3">🎯 Misiunea Jocului</h3>
-                    <p class="text-gray-700 leading-relaxed">
-                        Acest joc interactiv face parte din programul educațional al <strong>Săptămânii Verzi Bacău 2025</strong>. 
-                        Evenimentul se organizează pentru 110 copii și tineri din județul Vrancea, cu scopul de a învăța importanța reciclării și protejării mediului prin joc și distracție!
-                    </p>
-                </div>
-                <div>
-                    <h3 class="fun-text text-2xl font-bold text-blue-700 mb-3">🌿 Asociația Grupul Verde</h3>
-                    <p class="text-gray-700 leading-relaxed">
-                        Suntem o organizație dedicată educației ecologice în județul Vrancea, oraș Adjud. Credem că viitorul planetei 
-                        începe cu educarea copiilor despre importanța unui mediu curat și sănătos pentru toți!
-                    </p>
-                </div>
-            </div>
+        <div>
+          <h3 class="fun-text text-2xl font-bold text-blue-700 mb-3">🌿 Asociația Grupul Verde</h3>
+          <p class="text-gray-700 leading-relaxed">
+            Suntem o organizație dedicată educației ecologice în județul Vrancea, oraș Adjud. Credem că viitorul planetei
+            începe cu educarea copiilor despre importanța unui mediu curat și sănătos pentru toți!
+          </p>
         </div>
+      </div>
+    </section>
 
-        <!-- Progress Section -->
-        <div class="bg-white rounded-3xl p-6 mb-8 shadow-2xl">
-            <div class="flex justify-between items-center mb-4">
-                <div class="text-2xl font-bold text-gray-800">Progres: <span id="score">0</span>/8</div>
-                <div class="text-2xl">⭐ <span id="stars">0</span></div>
-            </div>
-            <div class="w-full bg-gray-200 rounded-full h-4">
-                <div id="progressBar" class="progress-bar bg-gradient-to-r from-green-400 to-blue-500 h-4 rounded-full" style="width: 0%"></div>
-            </div>
+    <!-- Progress Section -->
+    <section class="bg-white rounded-3xl p-6 mb-8 shadow-2xl" aria-label="Progres joc">
+      <div class="flex justify-between items-center mb-4">
+        <div class="text-2xl font-bold text-gray-800">Progres: <span id="score">0</span>/8</div>
+        <div class="text-2xl" aria-live="polite">⭐ <span id="stars">0</span></div>
+      </div>
+      <div class="w-full bg-gray-200 rounded-full h-4" role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0">
+        <div id="progressBar" class="progress-bar bg-gradient-to-r from-green-400 to-blue-500 h-4 rounded-full" style="width: 0%"></div>
+      </div>
+    </section>
+
+    <!-- Game Area -->
+    <main class="grid grid-cols-1 lg:grid-cols-3 gap-8" aria-label="Zonă de joc">
+      <!-- Items to Sort -->
+      <section class="lg:col-span-1" aria-label="Obiecte de sortat">
+        <div class="bg-white rounded-3xl p-6 shadow-2xl">
+          <h2 class="fun-text text-2xl font-bold text-center mb-6 text-purple-700">🎯 Obiecte de sortat</h2>
+          <div id="itemsContainer" class="grid grid-cols-2 gap-4" aria-live="polite">
+            <!-- Generat dinamic -->
+          </div>
         </div>
+      </section>
 
-        <!-- Game Area -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Items to Sort -->
-            <div class="lg:col-span-1">
-                <div class="bg-white rounded-3xl p-6 shadow-2xl">
-                    <h2 class="fun-text text-2xl font-bold text-center mb-6 text-purple-700">🎯 Obiecte de sortat</h2>
-                    <div id="itemsContainer" class="grid grid-cols-2 gap-4">
-                        <!-- Items will be generated here -->
-                    </div>
-                </div>
+      <!-- Drop Zones -->
+      <section class="lg:col-span-2" aria-label="Containere de reciclare">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Plastic Container -->
+          <div class="drop-zone bg-yellow-100 rounded-3xl p-8 shadow-2xl border-4 border-yellow-300"
+               data-category="plastic"
+               role="region"
+               aria-label="Container Plastic"
+               tabindex="0">
+            <div class="text-center">
+              <div class="text-6xl mb-4" aria-hidden="true">♻️</div>
+              <h3 class="playful-header text-3xl font-bold text-yellow-800 mb-2">PLASTIC</h3>
+              <p class="text-yellow-700 font-semibold">Sticle, pungi, jucării din plastic</p>
+              <div class="drop-items mt-4 min-h-[200px] border-3 border-dashed border-yellow-400 rounded-2xl flex flex-wrap gap-2 p-4 items-start content-start" aria-live="polite">
+                <!-- Elemente plasate -->
+              </div>
             </div>
+          </div>
 
-            <!-- Drop Zones -->
-            <div class="lg:col-span-2">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Plastic Container -->
-                    <div class="drop-zone bg-yellow-100 rounded-3xl p-8 shadow-2xl border-4 border-yellow-300" 
-                         data-category="plastic">
-                        <div class="text-center">
-                            <div class="text-6xl mb-4">♻️</div>
-                            <h3 class="playful-header text-3xl font-bold text-yellow-800 mb-2">PLASTIC</h3>
-                            <p class="text-yellow-700 font-semibold">Sticle, pungi, jucării din plastic</p>
-                            <div class="mt-4 min-h-[200px] border-3 border-dashed border-yellow-400 rounded-2xl flex flex-wrap gap-2 p-4 items-start content-start">
-                                <!-- Dropped items will appear here -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Paper Container -->
-                    <div class="drop-zone bg-blue-100 rounded-3xl p-8 shadow-2xl border-4 border-blue-300" 
-                         data-category="hartie">
-                        <div class="text-center">
-                            <div class="text-6xl mb-4">📄</div>
-                            <h3 class="playful-header text-3xl font-bold text-blue-800 mb-2">HÂRTIE</h3>
-                            <p class="text-blue-700 font-semibold">Cărți, ziare, carton</p>
-                            <div class="mt-4 min-h-[200px] border-3 border-dashed border-blue-400 rounded-2xl flex flex-wrap gap-2 p-4 items-start content-start">
-                                <!-- Dropped items will appear here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <!-- Paper Container -->
+          <div class="drop-zone bg-blue-100 rounded-3xl p-8 shadow-2xl border-4 border-blue-300"
+               data-category="hartie"
+               role="region"
+               aria-label="Container Hârtie"
+               tabindex="0">
+            <div class="text-center">
+              <div class="text-6xl mb-4" aria-hidden="true">📄</div>
+              <h3 class="playful-header text-3xl font-bold text-blue-800 mb-2">HÂRTIE</h3>
+              <p class="text-blue-700 font-semibold">Cărți, ziare, carton</p>
+              <div class="drop-items mt-4 min-h-[200px] border-3 border-dashed border-blue-400 rounded-2xl flex flex-wrap gap-2 p-4 items-start content-start" aria-live="polite">
+                <!-- Elemente plasate -->
+              </div>
             </div>
+          </div>
         </div>
+      </section>
+    </main>
 
-        <!-- Feedback Messages -->
-        <div id="feedback" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 hidden">
-            <div class="bg-white rounded-3xl p-8 shadow-2xl text-center">
-                <div id="feedbackIcon" class="text-8xl mb-4"></div>
-                <div id="feedbackText" class="text-2xl font-bold"></div>
-            </div>
+    <!-- Micro-copy pentru profesori -->
+    <section id="pentru-profesori" class="bg-white rounded-3xl p-6 mt-2 shadow-2xl">
+      <h2 class="playful-header text-2xl font-bold text-emerald-700 mb-4">👩‍🏫 Ghid rapid pentru profesori</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-700">
+        <div>
+          <h3 class="font-bold mb-2">Obiective de învățare</h3>
+          <ul class="list-disc pl-5 space-y-1 text-sm">
+            <li>Identifică corect deșeurile de plastic și hârtie.</li>
+            <li>Explică de ce sortarea corectă reduce poluarea.</li>
+            <li>Colaborează în perechi/echipă pentru a finaliza sarcina.</li>
+          </ul>
         </div>
+        <div>
+          <h3 class="font-bold mb-2">Cum folosesc jocul (10–15 min)</h3>
+          <ol class="list-decimal pl-5 space-y-1 text-sm">
+            <li>Proiectează jocul pe ecran (sau elevii pe dispozitive). </li>
+            <li>Explică regulile: trage obiectul peste containerul corect.</li>
+            <li>Lucrează pe echipe: fiecare mută pe rând 1 obiect.</li>
+            <li>La final, discutați ce a fost ușor/greu și de ce.</li>
+          </ol>
+        </div>
+        <div>
+          <h3 class="font-bold mb-2">Evaluare & extindere</h3>
+          <ul class="list-disc pl-5 space-y-1 text-sm">
+            <li><strong>Exit ticket:</strong> fiecare dă un exemplu corect de sortare.</li>
+            <li><strong>Extindere:</strong> cere elevilor să adauge 2 obiecte noi și să spună unde le pun.</li>
+            <li><strong>Acasă:</strong> provocare „3 la rând” – sortează corect 3 obiecte în familie.</li>
+          </ul>
+        </div>
+      </div>
+      <details class="mt-4">
+        <summary class="cursor-pointer font-semibold text-sm text-emerald-700">Diferențiere & accesibilitate</summary>
+        <ul class="list-disc pl-5 space-y-1 mt-2 text-sm text-gray-700">
+          <li>Grupează elevii heterogen (sprijin colegial pentru limbaj/tehnologie).</li>
+          <li>Activează citirea ecranului: etichetele ARIA sunt incluse.</li>
+          <li>Permite verbalizarea deciziei înainte de a muta obiectul („Pun ziarul la hârtie fiindcă…”).</li>
+        </ul>
+      </details>
+    </section>
 
-        <!-- Completion Modal -->
-        <div id="completionModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
-            <div class="bg-white rounded-3xl p-8 text-center max-w-md mx-4 shadow-2xl">
-                <div class="text-8xl mb-4">🎉</div>
-                <h2 class="fun-text text-3xl font-bold text-green-600 mb-4">Felicitări!</h2>
-                <p class="text-xl text-gray-700 mb-4">Ai sortat corect toate obiectele! Ești un adevărat protector al planetei! 🌍</p>
-                <div class="bg-green-50 rounded-2xl p-4 mb-6">
-                    <p class="text-sm text-green-800 font-semibold">
-                        🌱 Mulțumim că participi la Săptămâna Verde Bacău 2025!<br>
-                        Împreună cu 110 copii și tineri din Vrancea facem diferența pentru mediul nostru!
-                    </p>
-                </div>
-                <button onclick="resetGame()" class="bg-gradient-to-r from-green-400 to-blue-500 text-white px-8 py-4 rounded-2xl text-xl font-bold hover:from-green-500 hover:to-blue-600 transition-all duration-300 transform hover:scale-105">
-                    Joacă din nou! 🔄
-                </button>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="mt-12 bg-white bg-opacity-20 rounded-3xl p-6 backdrop-blur-sm">
-            <div class="text-center text-white">
-                <h4 class="playful-header text-xl font-bold mb-3">🌿 Asociația Grupul Verde - Adjud, Vrancea</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-                    <div>
-                        <p class="font-semibold mb-2">📧 Contact</p>
-                        <p class="mb-1">Email: marian.dumitru@grupulverde.ro</p>
-                        <p class="mb-1">📍 Strada Alexandru Ioan Cuza 64, Adjud, Vrancea</p>
-                        <p class="mb-1">📞 Telefon: +40 (0374) 962 748</p>
-                        <p>🌐 www.grupulverde.ro</p>
-                    </div>
-                    <div>
-                        <p class="font-semibold mb-2">🌍 Misiunea noastră</p>
-                        <p class="mb-3">Educație ecologică pentru copii</p>
-                        <p class="font-semibold mb-1">🎯 Obiectivul</p>
-                        <p>Un Adjud și o Vrancea mai verde și curată</p>
-                    </div>
-                </div>
-                <div class="mt-4 pt-4 border-t border-white border-opacity-30">
-                    <p class="text-xs opacity-80">
-                        © 2025 Săptămâna Verde Bacău - O inițiativă pentru educația ecologică a 110 copii și tineri din județul Vrancea
-                    </p>
-                </div>
-            </div>
-        </div>
+    <!-- Feedback Messages -->
+    <div id="feedback" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 hidden" role="alert" aria-live="assertive">
+      <div class="bg-white rounded-3xl p-8 shadow-2xl text-center">
+        <div id="feedbackIcon" class="text-8xl mb-4"></div>
+        <div id="feedbackText" class="text-2xl font-bold"></div>
+      </div>
     </div>
 
-    <script>
-        const items = [
-            { id: 1, name: 'Sticlă de apă', emoji: '🍼', category: 'plastic' },
-            { id: 2, name: 'Ziar', emoji: '📰', category: 'hartie' },
-            { id: 3, name: 'Pungă de plastic', emoji: '🛍️', category: 'plastic' },
-            { id: 4, name: 'Carte', emoji: '📚', category: 'hartie' },
-            { id: 5, name: 'Jucărie din plastic', emoji: '🧸', category: 'plastic' },
-            { id: 6, name: 'Cutie de carton', emoji: '📦', category: 'hartie' },
-            { id: 7, name: 'Sticlă de șampon', emoji: '🧴', category: 'plastic' },
-            { id: 8, name: 'Caiet', emoji: '📓', category: 'hartie' }
-        ];
+    <!-- Completion Modal -->
+    <div id="completionModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center" aria-modal="true" role="dialog" aria-labelledby="completeTitle" aria-describedby="completeDesc">
+      <div class="bg-white rounded-3xl p-8 text-center max-w-md mx-4 shadow-2xl">
+        <div class="text-8xl mb-4" aria-hidden="true">🎉</div>
+        <h2 id="completeTitle" class="fun-text text-3xl font-bold text-green-600 mb-4">Felicitări!</h2>
+        <p id="completeDesc" class="text-xl text-gray-700 mb-4">Ai sortat corect toate obiectele! Ești un adevărat protector al planetei! 🌍</p>
+        <div class="bg-green-50 rounded-2xl p-4 mb-6">
+          <p class="text-sm text-green-800 font-semibold">
+            🌱 Mulțumim că participi la Săptămâna Verde Bacău 2025!<br />
+            Împreună cu 110 copii și tineri din Vrancea facem diferența pentru mediul nostru!
+          </p>
+        </div>
+        <button id="resetBtn" class="bg-gradient-to-r from-green-400 to-blue-500 text-white px-8 py-4 rounded-2xl text-xl font-bold hover:from-green-500 hover:to-blue-600 transition-all duration-300 transform hover:scale-105">
+          Joacă din nou! 🔄
+        </button>
+      </div>
+    </div>
 
-        let score = 0;
-        let stars = 0;
-        let gameItems = [...items];
+    <!-- Footer -->
+    <footer class="mt-12 bg-white bg-opacity-20 rounded-3xl p-6 backdrop-blur-sm">
+      <div class="text-center text-white">
+        <h4 class="playful-header text-xl font-bold mb-3">🌿 Asociația Grupul Verde - Adjud, Vrancea</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+          <div>
+            <p class="font-semibold mb-2">📧 Contact</p>
+            <p class="mb-1">Email: <a class="underline" href="mailto:marian.dumitru@grupulverde.ro">marian.dumitru@grupulverde.ro</a></p>
+            <p class="mb-1">📍 Strada Alexandru Ioan Cuza 64, Adjud, Vrancea</p>
+            <p class="mb-1">📞 Telefon: <a class="underline" href="tel:+40374962748">+40 (0374) 962 748</a></p>
+            <p>🌐 <a class="underline" href="https://www.grupulverde.ro/">www.grupulverde.ro</a></p>
+          </div>
+          <div>
+            <p class="font-semibold mb-2">🌍 Misiunea noastră</p>
+            <p class="mb-3">Educație ecologică pentru copii</p>
+            <p class="font-semibold mb-1">🎯 Obiectivul</p>
+            <p>Un Adjud și o Vrancea mai verde și curată</p>
+          </div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-white border-opacity-30">
+          <p class="text-xs opacity-80">
+            © 2025 Săptămâna Verde Bacău – O inițiativă pentru educația ecologică a 110 copii și tineri din județul Vrancea
+          </p>
+        </div>
+      </div>
+    </footer>
+  </div>
 
-        function initGame() {
-            const container = document.getElementById('itemsContainer');
-            container.innerHTML = '';
-            
-            gameItems.forEach(item => {
-                const itemElement = document.createElement('div');
-                itemElement.className = 'draggable bg-white rounded-2xl p-4 shadow-lg cursor-grab border-3 border-gray-200 hover:border-purple-300 transition-all duration-300';
-                itemElement.draggable = true;
-                itemElement.dataset.category = item.category;
-                itemElement.dataset.id = item.id;
-                
-                itemElement.innerHTML = `
-                    <div class="text-center">
-                        <div class="text-4xl mb-2">${item.emoji}</div>
-                        <div class="text-sm font-semibold text-gray-700">${item.name}</div>
-                    </div>
-                `;
-                
-                itemElement.addEventListener('dragstart', handleDragStart);
-                itemElement.addEventListener('dragend', handleDragEnd);
-                
-                container.appendChild(itemElement);
-            });
-        }
+  <!-- Scripts -->
+  <script defer>
+    const items = [
+      { id: 1, name: 'Sticlă de apă', emoji: '🍼', category: 'plastic' },
+      { id: 2, name: 'Ziar', emoji: '📰', category: 'hartie' },
+      { id: 3, name: 'Pungă de plastic', emoji: '🛍️', category: 'plastic' },
+      { id: 4, name: 'Carte', emoji: '📚', category: 'hartie' },
+      { id: 5, name: 'Jucărie din plastic', emoji: '🧸', category: 'plastic' },
+      { id: 6, name: 'Cutie de carton', emoji: '📦', category: 'hartie' },
+      { id: 7, name: 'Sticlă de șampon', emoji: '🧴', category: 'plastic' },
+      { id: 8, name: 'Caiet', emoji: '📓', category: 'hartie' }
+    ];
 
-        function handleDragStart(e) {
-            e.dataTransfer.setData('text/plain', e.target.dataset.category);
-            e.dataTransfer.setData('application/json', JSON.stringify({
-                id: e.target.dataset.id,
-                category: e.target.dataset.category
-            }));
-            e.target.classList.add('dragging');
-        }
+    let score = 0;
+    let stars = 0;
 
-        function handleDragEnd(e) {
-            e.target.classList.remove('dragging');
-        }
+    function initGame() {
+      score = 0;
+      stars = 0;
+      updateProgress();
 
-        // Setup drop zones
-        document.querySelectorAll('.drop-zone').forEach(zone => {
-            zone.addEventListener('dragover', handleDragOver);
-            zone.addEventListener('drop', handleDrop);
-            zone.addEventListener('dragenter', handleDragEnter);
-            zone.addEventListener('dragleave', handleDragLeave);
+      const container = document.getElementById('itemsContainer');
+      container.innerHTML = '';
+
+      items.forEach(item => {
+        const el = document.createElement('div');
+        el.className = 'draggable bg-white rounded-2xl p-4 shadow-lg cursor-grab border-3 border-gray-200 hover:border-purple-300 transition-all duration-300';
+        el.draggable = true;
+        el.dataset.category = item.category;
+        el.dataset.id = String(item.id);
+        el.setAttribute('role','button');
+        el.setAttribute('aria-grabbed','false');
+        el.setAttribute('tabindex','0');
+
+        el.innerHTML = `
+          <div class="text-center">
+            <div class="text-4xl mb-2">${item.emoji}</div>
+            <div class="text-sm font-semibold text-gray-700">${item.name}</div>
+          </div>
+        `;
+
+        el.addEventListener('dragstart', handleDragStart);
+        el.addEventListener('dragend', handleDragEnd);
+        el.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            showFeedback(false, 'Ține apăsat și trage spre containerul corect 🧠');
+          }
         });
 
-        function handleDragOver(e) {
-            e.preventDefault();
-        }
+        container.appendChild(el);
+      });
+    }
 
-        function handleDragEnter(e) {
-            e.preventDefault();
-            e.currentTarget.classList.add('drag-over');
-        }
+    function handleDragStart(e) {
+      const target = e.currentTarget;
+      e.dataTransfer.setData('application/json', JSON.stringify({
+        id: target.dataset.id,
+        category: target.dataset.category
+      }));
+      target.classList.add('dragging');
+      target.setAttribute('aria-grabbed','true');
+    }
 
-        function handleDragLeave(e) {
-            if (!e.currentTarget.contains(e.relatedTarget)) {
-                e.currentTarget.classList.remove('drag-over');
-            }
-        }
+    function handleDragEnd(e) {
+      e.currentTarget.classList.remove('dragging');
+      e.currentTarget.setAttribute('aria-grabbed','false');
+    }
 
-        function handleDrop(e) {
-            e.preventDefault();
-            e.currentTarget.classList.remove('drag-over');
-            
-            const itemData = JSON.parse(e.dataTransfer.getData('application/json'));
-            const dropZoneCategory = e.currentTarget.dataset.category;
-            
-            const draggedElement = document.querySelector(`[data-id="${itemData.id}"]`);
-            
-            if (itemData.category === dropZoneCategory) {
-                // Correct drop
-                const dropArea = e.currentTarget.querySelector('div > div:last-child');
-                
-                // Create smaller version for drop area
-                const droppedItem = document.createElement('div');
-                droppedItem.className = 'bg-white rounded-xl p-2 shadow-md border-2 border-green-300';
-                droppedItem.innerHTML = `
-                    <div class="text-center">
-                        <div class="text-2xl">${draggedElement.querySelector('div > div:first-child').textContent}</div>
-                    </div>
-                `;
-                
-                dropArea.appendChild(droppedItem);
-                draggedElement.remove();
-                
-                score++;
-                stars++;
-                updateProgress();
-                showFeedback(true, 'Excelent! 🎉');
-                e.currentTarget.classList.add('correct-drop');
-                
-                setTimeout(() => {
-                    e.currentTarget.classList.remove('correct-drop');
-                }, 600);
-                
-                if (score === items.length) {
-                    setTimeout(showCompletion, 1000);
-                }
-            } else {
-                // Wrong drop
-                showFeedback(false, 'Încearcă din nou! 💪');
-                e.currentTarget.classList.add('wrong-drop');
-                
-                setTimeout(() => {
-                    e.currentTarget.classList.remove('wrong-drop');
-                }, 600);
-            }
+    document.querySelectorAll('.drop-zone').forEach(zone => {
+      zone.addEventListener('dragover', (e) => e.preventDefault());
+      zone.addEventListener('dragenter', (e) => {
+        e.preventDefault();
+        zone.classList.add('drag-over');
+      });
+      zone.addEventListener('dragleave', (e) => {
+        if (!zone.contains(e.relatedTarget)) {
+          zone.classList.remove('drag-over');
         }
+      });
+      zone.addEventListener('drop', handleDrop);
+    });
 
-        function updateProgress() {
-            document.getElementById('score').textContent = score;
-            document.getElementById('stars').textContent = stars;
-            const progressPercent = (score / items.length) * 100;
-            document.getElementById('progressBar').style.width = progressPercent + '%';
+    function handleDrop(e) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drag-over');
+
+      const itemData = JSON.parse(e.dataTransfer.getData('application/json'));
+      const dropZone = e.currentTarget;
+      const dropZoneCategory = dropZone.dataset.category;
+
+      const draggedElement = document.querySelector(`[data-id="${itemData.id}"]`);
+      if (!draggedElement) return;
+
+      if (itemData.category === dropZoneCategory) {
+        const dropArea = dropZone.querySelector('.drop-items');
+
+        const droppedItem = document.createElement('div');
+        droppedItem.className = 'bg-white rounded-xl p-2 shadow-md border-2 border-green-300';
+        droppedItem.innerHTML = `
+          <div class="text-center">
+            <div class="text-2xl">${draggedElement.querySelector('div > div:first-child').textContent}</div>
+          </div>
+        `;
+        dropArea.appendChild(droppedItem);
+        draggedElement.remove();
+
+        score++;
+        stars++;
+        updateProgress();
+        showFeedback(true, 'Excelent! 🎉');
+        dropZone.classList.add('correct-drop');
+        setTimeout(() => dropZone.classList.remove('correct-drop'), 600);
+
+        if (score === items.length) {
+          setTimeout(showCompletion, 600);
         }
+      } else {
+        showFeedback(false, 'Încearcă din nou! 💪');
+        e.currentTarget.classList.add('wrong-drop');
+        setTimeout(() => e.currentTarget.classList.remove('wrong-drop'), 600);
+      }
+    }
 
-        function showFeedback(isCorrect, message) {
-            const feedback = document.getElementById('feedback');
-            const icon = document.getElementById('feedbackIcon');
-            const text = document.getElementById('feedbackText');
-            
-            if (isCorrect) {
-                icon.textContent = '🎉';
-                text.textContent = message;
-                text.className = 'text-2xl font-bold text-green-600';
-            } else {
-                icon.textContent = '😅';
-                text.textContent = message;
-                text.className = 'text-2xl font-bold text-orange-600';
-            }
-            
-            feedback.classList.remove('hidden');
-            feedback.classList.add('celebration');
-            
-            setTimeout(() => {
-                feedback.classList.add('hidden');
-                feedback.classList.remove('celebration');
-            }, 2000);
-        }
+    function updateProgress() {
+      document.getElementById('score').textContent = String(score);
+      document.getElementById('stars').textContent = String(stars);
+      const progressPercent = (score / items.length) * 100;
+      document.getElementById('progressBar').style.width = progressPercent + '%';
 
-        function showCompletion() {
-            document.getElementById('completionModal').classList.remove('hidden');
-        }
+      const barWrapper = document.querySelector('[role="progressbar"]');
+      if (barWrapper) barWrapper.setAttribute('aria-valuenow', String(score));
+    }
 
-        function resetGame() {
-            score = 0;
-            stars = 0;
-            gameItems = [...items];
-            
-            // Clear drop zones
-            document.querySelectorAll('.drop-zone div > div:last-child').forEach(area => {
-                area.innerHTML = '';
-            });
-            
-            updateProgress();
-            initGame();
-            document.getElementById('completionModal').classList.add('hidden');
-        }
+    function showFeedback(isCorrect, message) {
+      const feedback = document.getElementById('feedback');
+      const icon = document.getElementById('feedbackIcon');
+      const text = document.getElementById('feedbackText');
 
-        // Initialize game
-        initGame();
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9806663963bd6afc',t:'MTc1ODA4ODk5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+      icon.textContent = isCorrect ? '🎉' : '😅';
+      text.textContent = message;
+      text.className = 'text-2xl font-bold ' + (isCorrect ? 'text-green-600' : 'text-orange-600');
+
+      feedback.classList.remove('hidden');
+      feedback.classList.add('celebration');
+
+      setTimeout(() => {
+        feedback.classList.add('hidden');
+        feedback.classList.remove('celebration');
+      }, 1800);
+    }
+
+    function showCompletion() {
+      document.getElementById('completionModal').classList.remove('hidden');
+    }
+
+    function resetGame() {
+      document.querySelectorAll('.drop-items').forEach(area => { area.innerHTML = ''; });
+      initGame();
+      document.getElementById('completionModal').classList.add('hidden');
+    }
+
+    document.getElementById('resetBtn').addEventListener('click', resetGame);
+
+    initGame();
+  </script>
+</body>
 </html>
